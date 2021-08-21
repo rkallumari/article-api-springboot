@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  backend:
+    build: .
+    environment:
+      UNSPLASH_ACCESS_KEY: 'xqJ_zz0Y_-otIh0UqQGFm_gG15KOm8KjLiNIFpBF8b0'
+    expose:
+      - '3000'
+  frontend:
+    image: 'medibankdigital/hacker-card-frontend:latest'
+    depends_on:
+      - backend
+    expose:
+      - '3001'
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+    ports:
+      - '4000:4000'
